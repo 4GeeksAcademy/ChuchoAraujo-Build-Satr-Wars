@@ -87,6 +87,68 @@ def delete_user(user_id):
     return jsonify(response_body)
 
 
+#########################################################  PEOPLE #############################################################################################
+
+#------------------------------- GET PEOPLE -------------------------------
+@app.route('/people', methods=['GET'])
+def get_all_people():
+
+    people = People.query.all()
+    serialized_people = [p.serialize() for p in people]
+
+    return jsonify(serialized_people), 200
+
+
+#------------------------------- GET USER/ID -------------------------------
+@app.route('/people/<int:people_id>', methods=['GET'])
+def get_people(people_id):
+
+    people = People.query.get(people_id)
+    serialized_people = people.serialize()
+
+    return jsonify(serialized_people), 200
+
+#------------------------------- POST PEOPLE -------------------------------
+@app.route('/people', methods=['POST'])
+def create_people():
+    body = request.get_json()
+    new_people = People(name = body['name'], description = body['description'])
+    db.session.add(new_people)
+    db.session.commit()
+
+    response_body = {
+        "msg": "People created successfully", 
+        "people": new_people.serialize()
+    }
+
+    return jsonify(response_body), 200
+
+
+#------------------------------- DELETE USERS -------------------------------
+
+@app.route('/people/<int:people_id>', methods= ['DELETE'])
+def delete_people(people_id):
+    people = People.query.get(people_id)
+    db.session.delete(people)
+    db.session.commit()
+
+    response_body = {
+        "msg": "people deleted", 
+        "people": people.serialize()
+    }
+
+    return jsonify(response_body)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
