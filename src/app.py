@@ -36,9 +36,9 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+#########################################################  USERS #############################################################################################
 
-
-######################## GET USERS ########################
+#------------------------------- GET USERS -------------------------------
 @app.route('/users', methods=['GET'])
 def get_all_users():
 
@@ -47,7 +47,7 @@ def get_all_users():
 
     return jsonify(serialized_users), 200
 
-######################## GET USER/ID ########################
+#------------------------------- GET USER/ID -------------------------------
 @app.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
 
@@ -56,7 +56,7 @@ def get_user(user_id):
 
     return jsonify(serialized_user), 200
 
-######################## POST USERS ########################
+#------------------------------- POST USERS -------------------------------
 @app.route('/users', methods=['POST'])
 def create_user():
     body = request.get_json()
@@ -70,6 +70,8 @@ def create_user():
     }
 
     return jsonify(response_body), 200
+
+#------------------------------- DELETE USERS -------------------------------
 
 @app.route('/users/<int:user_id>', methods= ['DELETE'])
 def delete_user(user_id):
